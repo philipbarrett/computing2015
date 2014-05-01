@@ -14,6 +14,7 @@ setwd( stDir )
       # Set the working directory to stDir
 
 #### 1. CHECK FOR & INSTALL REQUIRED PACKAGES  ####
+##*** If running on Acropolis, comment out this section ***##
 mPackages <- installed.packages()
       # Details of installed packages
 stInstalled <- rownames( mPackages )
