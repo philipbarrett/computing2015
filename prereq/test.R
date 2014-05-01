@@ -6,7 +6,7 @@
 ###############################################################################
 
 #### 0. CONTROLS ####
-stDir <- '/home/philip/Dropbox/2014/Teaching/Computational Colloquium/barrett_rcpp/prereq'
+stDir <- '/home/philip/Dropbox/2014/Teaching/practicalComputing/barrett_rcpp/prereq'
       # Directory that the installation check file is saved to. Change this to 
       # your local address.  Remember to use (double) backslashes for addresses
       # on windows machines.
