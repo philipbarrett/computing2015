@@ -16,9 +16,9 @@
 # set up
 #setwd("C:/Users/Acer/Dropbox/JohnEricHumphries_EconGradSchool/CourseMaterial/BayesianMetrics")
 #setwd("/mnt/ide0/home/johneric/sbox/courses/BayesianMetrics/finalProject")
-setwd("~/Dropbox/2014/Teaching/practicalComputing/barrett_rcpp/")
-Rcpp::sourceCpp('arma_basics.cpp')
+setwd("~/Dropbox/2014/Teaching/practicalComputing/barrett_rcpp/class2/")
 rm(list=ls())           # Clear the workspace
+Rcpp::sourceCpp('gibbs.cpp')
 set.seed(907)           # set random seed
 
 # Libraries
@@ -130,6 +130,7 @@ factorRGibbs <- function(Niter,burnin,thin,alpha,f,sigma2,F1,beta,Y,X) {
     
     # Draw from alpha
     Ya = Y - X%*%t(beta)
+    browser()
     alpha <- alphaUpdate(Ya,f,sigma2)
     
     # Draw from beta
@@ -151,6 +152,13 @@ factorRGibbs <- function(Niter,burnin,thin,alpha,f,sigma2,F1,beta,Y,X) {
 
 #Running the function
 results <- factorRGibbs(1000,1000,1,alpha,f,sigma2,F1,beta,Y,X)
+    # (Niter,burnin,thin,alpha,f,sigma2,F1,beta,Y,X)
+resultsC <- factorCGibbs(n, J, 1000, 1, 1000, K, 
+                         alpha, X, beta, f, 
+                         sigma2, Y )
+    # (int N, int Measures, int Burnin, int Thin, int Niter, int Nfactors,
+    # NumericVector alpha, NumericVector X, NumericVector beta, NumericVector f,
+    # NumericVector sigma2, NumericVector Y )
 
 
 #===========================

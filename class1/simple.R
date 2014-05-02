@@ -8,6 +8,9 @@
 ###############################################################################
 
 library(microbenchmark)
+setwd("~/Dropbox/2014/Teaching/practicalComputing/barrett_rcpp/class1/")
+Rcpp::sourceCpp('simple.cpp')
+Rcpp::sourceCpp('arma_basics.cpp')
 
 sumR <- function(x) {
 # A *horrible* way to sum up vectors
