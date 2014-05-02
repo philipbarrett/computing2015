@@ -7,6 +7,8 @@
 # Created: 19mar2014                                                          #
 ###############################################################################
 
+library(microbenchmark)
+
 sumR <- function(x) {
 # A *horrible* way to sum up vectors
   total <- 0
@@ -16,9 +18,16 @@ sumR <- function(x) {
   total
 }
 
-
 x <- runif(1e3)
 microbenchmark( sum(x), sumR(x), sumC(x) )
+
+iSize <- 3 # 5 # 10 # 40
+mA <- matrix( runif( iSize^2, 0, 1 ), ncol=iSize, nrow=iSize )
+vB <- runif( iSize, 0, 1 )
+solve( mA, vB )
+t( solve_cpp( mA, vB ) )
+microbenchmark( solve( mA, vB ), solve_cpp( mA, vB ) )
+
 
 mX <- cbind(runif( 10000, -1, 1 ), rnorm( 10000, 2, 3 ) )
 vY <- 2 + mX %*% c( 3, 4 ) + rnorm( 10000, 0, 2)

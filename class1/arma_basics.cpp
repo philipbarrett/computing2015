@@ -1,3 +1,14 @@
+/*********************************************************************
+ * 
+ * arma_basics.cpp
+ * Includes simple examples for learning how to use RcppArmadillo
+ * Some material taken from Dirk Eidelbuettel's wabpage:
+ *      http://dirk.eddelbuettel.com/code/rcpp.armadillo.html
+ * Philip Barrett, Chicago, 01may2014
+ * 
+ *********************************************************************/
+
+
 #include <RcppArmadillo.h>
 using namespace Rcpp;
 using namespace arma;
@@ -16,6 +27,12 @@ mat invert_arma(mat XX) {
 // Invert a matrix
   mat YY = inv( XX ) ;
   return YY ;
+}
+
+// [[Rcpp::export]]
+colvec solve_cpp( mat mA, colvec vB ) {
+// Invert a matrix
+  return solve( mA, vB ) ;
 }
 
 // [[Rcpp::export]]

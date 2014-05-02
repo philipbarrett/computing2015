@@ -14,13 +14,6 @@ using namespace arma;
 
 // [[Rcpp::depends(RcppArmadillo)]]
 
-
-
-
-
-
-
-
 // [[Rcpp::export]]
 SEXP factorCGibbs(int N, int Measures, int Burnin, int Thin, int Niter, int Nfactors,
                   NumericVector alpha, NumericVector X, NumericVector beta, NumericVector f,
