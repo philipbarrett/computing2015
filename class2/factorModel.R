@@ -85,7 +85,7 @@ factorRGibbs <- function(Niter,burnin,thin,alpha,f,sigma2,F1,beta,Y,X) {
   #Alpha Update#
   alphaUpdate = function(Ya,fa,sigma2)   {
     for (miter in (1+nfactors):measures) {
-      A1                 <- solve(  1/sigma2[miter] * (t(fa)%*%fa))
+      A1                 <- solve(  1/sigma2[miter] * (t(fa)%*%fa) )
       alpha1             <- A1 %*% (  1/sigma2[miter] * t(fa) %*% (Ya[,miter]) )
       alpha[miter,] <- rmnorm(1,alpha1,A1)    
     }
@@ -130,7 +130,6 @@ factorRGibbs <- function(Niter,burnin,thin,alpha,f,sigma2,F1,beta,Y,X) {
     
     # Draw from alpha
     Ya = Y - X%*%t(beta)
-    browser()
     alpha <- alphaUpdate(Ya,f,sigma2)
     
     # Draw from beta
@@ -151,11 +150,12 @@ factorRGibbs <- function(Niter,burnin,thin,alpha,f,sigma2,F1,beta,Y,X) {
 }
 
 #Running the function
-results <- factorRGibbs(1000,1000,1,alpha,f,sigma2,F1,beta,Y,X)
-    # (Niter,burnin,thin,alpha,f,sigma2,F1,beta,Y,X)
-resultsC <- factorCGibbs(n, J, 1000, 1, 1000, K, 
-                         alpha, X, beta, f, 
-                         sigma2, Y )
+t.R <- system.time( results.R <- factorRGibbs(1000,1000, 1, alpha,f,sigma2,F1,beta,Y,X) )
+t.C <- system.time( results.C <- factorCGibbs( 1000, 1000, 1, alpha, f, sigma2, beta, Y, X))
+
+# resultsC <- factorCGibbs(n, J, 1000, 1, 1000, K, 
+#                          alpha, X, beta, f, 
+#                          sigma2, Y )
     # (int N, int Measures, int Burnin, int Thin, int Niter, int Nfactors,
     # NumericVector alpha, NumericVector X, NumericVector beta, NumericVector f,
     # NumericVector sigma2, NumericVector Y )
@@ -165,17 +165,24 @@ resultsC <- factorCGibbs(n, J, 1000, 1, 1000, K,
 # Section 3: Checking Results
 #===========================
 
-alpha.mean = matrix(apply(results,2,mean)[1:J],J,1)
-sigma2.mean = apply(results,2,mean)[13:24]
-beta.mean = matrix(apply(results,2,mean)[25:36],J,1)
-f.mean = (apply(results,2,mean)[37:dim(results)[2]])
-cbind(alpha.true,alpha.mean)
-cbind(beta.true,beta.mean)
-cor(c(f.mean),c(f.true))
-cbind(sigma2.mean,sigma2.true)
-c( cor(x,f.mean), cor(x,f.true))
+alpha.mean.R = matrix(apply(results.R,2,mean)[1:J],J,1)
+sigma2.mean.R = apply(results.R,2,mean)[13:24]
+beta.mean.R = matrix(apply(results.R,2,mean)[25:36],J,1)
+f.mean.R = (apply(results.R,2,mean)[37:dim(results.R)[2]])
+
+alpha.mean.C = matrix(apply(results.C,2,mean)[1:J],J,1)
+sigma2.mean.C = apply(results.C,2,mean)[13:24]
+beta.mean.C = matrix(apply(results.C,2,mean)[25:36],J,1)
+f.mean.C = (apply(results.C,2,mean)[37:dim(results.C)[2]])
 
 
+cbind(alpha.true,alpha.mean.R,alpha.mean.C)
+cbind(beta.true,beta.mean.R, beta.mean.C)
+cor(c(f.mean.R),c(f.true))
+cor(c(f.mean.C),c(f.true))
+cbind(sigma2.mean.R,sigma2.mean.C,sigma2.true)
+
+# c( cor(x,f.mean), cor(x,f.true))
 
 
 #----

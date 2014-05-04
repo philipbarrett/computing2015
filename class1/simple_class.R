@@ -8,39 +8,34 @@
 ###############################################################################
 
 library(microbenchmark)
-setwd("~/Dropbox/2014/Teaching/practicalComputing/barrett_rcpp/class1/")
-Rcpp::sourceCpp('simple.cpp')
-Rcpp::sourceCpp('arma_basics.cpp')
 
-sumR <- function(x) {
-# A *horrible* way to sum up vectors
+sumR <- function(x){
+# A *horrible* way to sum vectors
   total <- 0
-  for (i in seq_along(x)) {
-    total <- total + x[i]
+  for ( iII in seq_along(x) ){
+    total <- total + x[iII]
   }
-  total
+  return( total )
 }
 
 x <- runif(1e3)
 microbenchmark( sum(x), sumR(x), sumC(x) )
 
-iSize <- 3 # 5 # 10 # 40
-mA <- matrix( runif( iSize^2, 0, 1 ), ncol=iSize, nrow=iSize )
-vB <- runif( iSize, 0, 1 )
-solve( mA, vB )
-t( solve_cpp( mA, vB ) )
-microbenchmark( solve( mA, vB ), solve_cpp( mA, vB ) )
+iSize <- 200
+mA <- matrix( runif( iSize ^ 2 ), iSize, iSize )
+vB <- vB <- runif( iSize )
+solve( mA, vB )  
+solve_cpp( mA, vB )
+microbenchmark( solve( mA, vB ) , solve_cpp( mA, vB ) )
 
-
-mX <- cbind(runif( 10000, -1, 1 ), rnorm( 10000, 2, 3 ) )
-vY <- 2 + mX %*% c( 3, 4 ) + rnorm( 10000, 0, 2)
-AA <- data.frame( X=mX, Y =vY  )
-
-reg.XY <- lm( Y ~ X.1 + X.2, data=AA )
+mX <- cbind( runif( 1000, -1, 1), rnorm( 1000, 2, 3 ) )
+vY <- 2 + mX %*% c( 3, 4 ) + rnorm( 1000, 0, 2 )
+reg.XY <- lm( vY ~ mX )
 summary( reg.XY )
-mpe( reg.XY )
 lm_cpp( vY, cbind( 1, mX ) )
 
 mXext <- cbind( 1, mX )
-microbenchmark( lm( Y ~ X.1 + X.2, data=AA ), lm_cpp( vY, mXext ) )
-    # About 180 times faster!
+microbenchmark( lm( vY ~ mX ), lm_cpp( vY, mXext ) )
+
+
+
