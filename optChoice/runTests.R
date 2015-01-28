@@ -19,7 +19,8 @@ sourceDir <- function(path, trace = TRUE, ...) {
     if(trace) cat('\n')
   }
 }
-sourceDir( 'R', trace=TRUE )
+st.fldr <- 'R' # 'Rbad/' #'R
+sourceDir( st.fldr, trace=TRUE )
 
 # 2. Run the test suite
 test.suite <- defineTestSuite( 'optChoice', dirs = file.path('tests'),

@@ -1,0 +1,7 @@
+sample.interval=20000
+sample.interval=20000
+sample.interval=20000
+".External2" "plot.new" "plot.default" "plot" "plot.demand.rho" 
+".External2" "plot.new" "plot.default" "plot" "plot.demand.rho" 
+".External2" "plot.new" "plot.default" "plot" "plot.demand.rho" 
+"save" "<Anonymous>" 

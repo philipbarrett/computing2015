@@ -16,7 +16,7 @@
 # set up
 #setwd("C:/Users/Acer/Dropbox/JohnEricHumphries_EconGradSchool/CourseMaterial/BayesianMetrics")
 #setwd("/mnt/ide0/home/johneric/sbox/courses/BayesianMetrics/finalProject")
-setwd("~/Dropbox/2014/Teaching/practicalComputing/barrett_rcpp/class2/")
+setwd("~/code/2015/teaching/computing2015/cpp/class2/")
 rm(list=ls())           # Clear the workspace
 Rcpp::sourceCpp('gibbs.cpp')
 set.seed(907)           # set random seed
@@ -150,9 +150,12 @@ factorRGibbs <- function(Niter,burnin,thin,alpha,f,sigma2,F1,beta,Y,X) {
 }
 
 #Running the function
+Rprof('Rgibbs.RProf')
 t.R <- system.time( results.R <- factorRGibbs(1000,1000, 1, alpha,f,sigma2,F1,beta,Y,X) )
+Rprof(NULL)
+Rprof('Cgibbs.RProf')
 t.C <- system.time( results.C <- factorCGibbs( 1000, 1000, 1, alpha, f, sigma2, beta, Y, X))
-
+Rprof(NULL)
 # resultsC <- factorCGibbs(n, J, 1000, 1, 1000, K, 
 #                          alpha, X, beta, f, 
 #                          sigma2, Y )
