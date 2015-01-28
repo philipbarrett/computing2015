@@ -24,10 +24,14 @@ share.cons.check <-function( vCons, vShare ){
     stop('Shares and consumption bundles must be the same size')
   # Error checking: make sure that the bundles and share are off the same length  
   
+  if( any( vCons < 0 ) )
+    stop('All consumption shares must be positive')
+  # Error checking: cannot have negative consumption
+  
   return( vShare )
 }
 
-util.CES <- function( vCons, vShare=NULL, rho=rho.true ){
+util.CES <- function( vCons, vShare=NULL, rho=1 ){
 # The utility of consuming a vector of goods vCons with share parameters vShare
 # and constant elasticity of substitution rho.  Utility is given by:
   
